@@ -1,3 +1,4 @@
+
 import os
 from datetime import datetime
 import sqlite3
@@ -8,92 +9,225 @@ from airflow.operators.python import PythonOperator
 from kaggle.api.kaggle_api_extended import KaggleApi
 
 
-def extract_data():
-    dataset = "rohanrao/nifty50-stock-market-data"
-    download_path = "/opt/airflow/dags/etl_pipeline/data"
+# -----------------------------
+# PATHS
+# -----------------------------
+DATA_DIR = "/opt/airflow/dags/etl_pipeline/data"
+OUTPUT_DIR = "/opt/airflow/data"
+RAW_FILE = f"{DATA_DIR}/spy_sample-1.csv"
+CLEAN_FILE = f"{OUTPUT_DIR}/cleaned.csv"
+DB_FILE = f"{OUTPUT_DIR}/stocks.db"
+CLEAN_FULL_FILE = f"{OUTPUT_DIR}/cleaned_full.csv"
 
-    os.makedirs(download_path, exist_ok=True)
+
+
+# extract dataset
+
+def extract_data():
+
+    dataset = "sashagolovin/option-chain-field-price-prediction"
+
+    os.makedirs(DATA_DIR, exist_ok=True)
+
+    if os.listdir(DATA_DIR):
+        print("Dataset already exists. Skipping download.")
+        return
 
     api = KaggleApi()
     api.authenticate()
 
     api.dataset_download_files(
         dataset,
-        path=download_path,
+        path=DATA_DIR,
         unzip=True
     )
 
-    return "Extraction complete"
+    print("Dataset downloaded successfully")
 
 
+
+# trasnform
 def transform_data():
-    # Source path
-    data_path = "/opt/airflow/dags/etl_pipeline/data"
 
-    # Destination path for cleaned CSV
-    output_path = "/opt/airflow/data/cleaned.csv"
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    # Make sure destination directory exists
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    print("Reading dataset...")
 
-    # Get all CSV files
-    csv_files = [f for f in os.listdir(data_path) if f.endswith(".csv")]
-
-    if not csv_files:
-        raise ValueError("No CSV files found for transformation")
-
-    df_list = []
-
-    for file in csv_files:
-        file_path = os.path.join(data_path, file)
-        print(f"Reading file: {file}")
-
-        df = pd.read_csv(file_path)
-
-        df.dropna(inplace=True)
-        df.drop_duplicates(inplace=True)
-
-        df_list.append(df)
-
-    combined_df = pd.concat(df_list, ignore_index=True)
-    combined_df.columns = combined_df.columns.str.lower().str.strip()
-
-    # Save cleaned CSV to /opt/airflow/data/cleaned.csv
-    combined_df.to_csv(output_path, index=False)
-
-    print(f"Transformation complete. Saved to {output_path}")
-
-    return "Transformation complete"
+    df = pd.read_csv(RAW_FILE)
 
 
+    # Dataset inspection
+    
+    print("Dataset Shape:", df.shape)
+    print("Columns:", df.columns.tolist())
+
+    
+    # Data validation
+
+    if df.empty:
+        raise ValueError("Dataset is empty")
+
+    required_columns = [
+        "QUOTE_UNIXTIME",
+        "STRIKE",
+        "UNDERLYING_LAST",
+        "C_IV",
+        "P_IV",
+        "C_VOLUME",
+        "P_VOLUME"
+    ]
+
+    for col in required_columns:
+        if col not in df.columns:
+            raise ValueError(f"Missing required column: {col}")
+
+    
+    # Cleaning
+    
+    print("Cleaning dataset...")
+
+    before_rows = df.shape[0]
+
+    df = df.drop_duplicates()
+    df = df.dropna()
+
+    after_rows = df.shape[0]
+
+    print(f"Removed {before_rows - after_rows} dirty rows")
+
+    # Save cleaned dataset
+    
+    df.to_csv(CLEAN_FULL_FILE, index=False)
+
+    
+    # Convert Unix Time
+    
+    print("Converting timestamp...")
+
+    df["time"] = pd.to_datetime(df["QUOTE_UNIXTIME"], unit="s")
+
+    
+    # ATM IV Calculation
+    
+    print("Calculating ATM IV...")
+
+    df["distance"] = abs(df["STRIKE"] - df["UNDERLYING_LAST"])
+
+    atm_df = df.loc[df.groupby("QUOTE_UNIXTIME")["distance"].idxmin()].copy()
+
+    atm_df["ATM_CALL_IV"] = atm_df["C_IV"]
+    atm_df["ATM_PUT_IV"] = atm_df["P_IV"]
+    atm_df["ATM_IV"] = (atm_df["C_IV"] + atm_df["P_IV"]) / 2
+
+    # -------------------------
+    # Put Call Ratio
+    # -------------------------
+    print("Calculating Put-Call Ratio...")
+
+    total_put_volume = df["P_VOLUME"].sum()
+    total_call_volume = df["C_VOLUME"].sum()
+
+    if total_call_volume == 0:
+        pcr = None
+        print("Call volume is zero, PCR cannot be calculated")
+    else:
+        pcr = total_put_volume / total_call_volume
+
+    print("Put Call Ratio:", pcr)
+
+    
+    # Most Active Strikes
+    
+    print("Finding most active strikes...")
+
+    df["total_volume"] = df["C_VOLUME"] + df["P_VOLUME"]
+
+    active_strikes = (
+        df.groupby("STRIKE")["total_volume"]
+        .sum()
+        .sort_values(ascending=False)
+        .head(10)
+    )
+
+    print("Top 10 Most Active Strikes:")
+    print(active_strikes)
+
+    # -------------------------
+    # Save ATM dataset
+    # -------------------------
+    atm_df.to_csv(CLEAN_FILE, index=False)
+
+    print("Transformation complete")
+
+
+# -----------------------------
+# LOAD
+# -----------------------------
 def load_data():
-    file_path = "/opt/airflow/data/cleaned.csv"
-    db_path = "/opt/airflow/data/stocks.db"
 
-    os.makedirs("/opt/airflow/data", exist_ok=True)
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    conn = sqlite3.connect(db_path)
+    print("Connecting to SQLite database...")
+
+    conn = sqlite3.connect(DB_FILE)
+
+    
+    # Load cleaned dataset
+
+    cleaned_full_path = f"{OUTPUT_DIR}/cleaned_full.csv"
+
+    df_clean = pd.read_csv(cleaned_full_path)
+
+    print("Loading cleaned data into SQLite...")
+
+    df_clean.to_sql(
+        "cleaned_data",
+        conn,
+        if_exists="replace",
+        index=False
+    )
+
+    print("Cleaned data loaded")
+
+    
+    # Load ATM dataset in chunks
+    
+    print("Loading ATM dataset in chunks...")
 
     chunk_size = 5000
     first_chunk = True
 
-    for chunk in pd.read_csv(file_path, chunksize=chunk_size):
+    for chunk in pd.read_csv(CLEAN_FILE, chunksize=chunk_size):
+
         if first_chunk:
-            chunk.to_sql("stocks", conn, if_exists="replace", index=False)
+            chunk.to_sql(
+                "atm_data",
+                conn,
+                if_exists="replace",
+                index=False
+            )
             first_chunk = False
         else:
-            chunk.to_sql("stocks", conn, if_exists="append", index=False)
+            chunk.to_sql(
+                "atm_data",
+                conn,
+                if_exists="append",
+                index=False
+            )
 
     conn.close()
 
-    return "Load complete"
+    print("ATM data loaded into SQLite successfully")
 
 
+# -----------------------------
+# DAG
+# -----------------------------
 with DAG(
     dag_id="etl_kaggle_pipeline",
     start_date=datetime(2024, 1, 1),
     schedule=None,
-    catchup=False
+    catchup=False,
 ) as dag:
 
     extract_task = PythonOperator(

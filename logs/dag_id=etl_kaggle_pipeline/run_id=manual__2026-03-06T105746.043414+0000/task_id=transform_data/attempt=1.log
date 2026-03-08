@@ -1,0 +1,34 @@
+{"timestamp":"2026-03-06T10:58:18.146097Z","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":179}
+{"timestamp":"2026-03-06T10:58:18.149567Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/etl_pipeline/dag_etl.py","logger":"airflow.models.dagbag.BundleDagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-03-06T10:58:18.745047Z","level":"warning","event":"The `airflow.operators.python.PythonOperator` attribute is deprecated. Please use `'airflow.providers.standard.operators.python.PythonOperator'`.","category":"DeprecatedImportWarning","filename":"/opt/airflow/dags/etl_pipeline/dag_etl.py","lineno":7,"logger":"py.warnings"}
+{"timestamp":"2026-03-06T10:58:18.812129Z","level":"info","event":"Task instance is in running state","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:18.812957Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:18.813669Z","level":"info","event":"Current task name:transform_data","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:18.815927Z","level":"info","event":"Dag name:etl_kaggle_pipeline","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.126693Z","level":"info","event":"ATM IV Sample:","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.185511Z","level":"info","event":"                     time  STRIKE     C_IV     P_IV","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.186692Z","level":"info","event":"76    2020-03-06 14:30:10   293.0  0.63459  0.32198","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.190084Z","level":"info","event":"4934  2020-03-06 14:35:00   293.0  0.63035  0.32799","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.190750Z","level":"info","event":"9793  2020-03-06 14:40:00   294.0  0.59915  0.27916","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.191595Z","level":"info","event":"14824 2020-03-06 14:45:00   294.0  0.51576  0.41102","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.192728Z","level":"info","event":"19507 2020-03-06 14:50:00   292.5  0.64323  0.29242","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.261578Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.262380Z","level":"info","event":"Put Call Ratio: 1.1912393981104228","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.313064Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.314214Z","level":"info","event":"Most Active Strikes:","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.318018Z","level":"info","event":"STRIKE","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.319160Z","level":"info","event":"297.0    164362.0","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.320615Z","level":"info","event":"300.0    161205.0","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.323765Z","level":"info","event":"305.0    143117.0","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.324863Z","level":"info","event":"275.0    141508.0","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.326119Z","level":"info","event":"320.0    136612.0","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.327938Z","level":"info","event":"296.0    135442.0","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.328935Z","level":"info","event":"298.0    133900.0","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.333270Z","level":"info","event":"304.0    133427.0","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.334130Z","level":"info","event":"293.0    132289.0","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.334879Z","level":"info","event":"301.0    128274.0","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.335717Z","level":"info","event":"Name: total_volume, dtype: float64","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.358405Z","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator","filename":"python.py","lineno":230}
+{"timestamp":"2026-03-06T10:58:30.441844Z","level":"info","event":"Task instance in success state","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.442854Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.RUNNING","logger":"task.stdout"}
+{"timestamp":"2026-03-06T10:58:30.444078Z","level":"info","event":"Task operator:<Task(PythonOperator): transform_data>","logger":"task.stdout"}

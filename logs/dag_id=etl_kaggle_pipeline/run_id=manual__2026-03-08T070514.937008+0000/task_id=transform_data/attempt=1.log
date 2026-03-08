@@ -1,0 +1,35 @@
+{"timestamp":"2026-03-08T07:05:49.703893Z","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":179}
+{"timestamp":"2026-03-08T07:05:49.706809Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/etl_pipeline/dag_etl.py","logger":"airflow.models.dagbag.BundleDagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-03-08T07:05:50.102636Z","level":"warning","event":"The `airflow.operators.python.PythonOperator` attribute is deprecated. Please use `'airflow.providers.standard.operators.python.PythonOperator'`.","category":"DeprecatedImportWarning","filename":"/opt/airflow/dags/etl_pipeline/dag_etl.py","lineno":200,"logger":"py.warnings"}
+{"timestamp":"2026-03-08T07:05:50.137104Z","level":"info","event":"Task instance is in running state","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:05:50.137889Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:05:50.138442Z","level":"info","event":"Current task name:transform_data","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:05:50.139000Z","level":"info","event":"Dag name:etl_kaggle_pipeline","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:05:50.141970Z","level":"info","event":"Reading dataset...","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:05:57.867094Z","level":"info","event":"Dataset Shape: (150598, 33)","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:05:57.882409Z","level":"info","event":"Columns: ['QUOTE_UNIXTIME', 'QUOTE_READTIME', 'QUOTE_DATE', 'QUOTE_TIME_HOURS', 'UNDERLYING_LAST', 'EXPIRE_DATE', 'EXPIRE_UNIX', 'DTE', 'C_DELTA', 'C_GAMMA', 'C_VEGA', 'C_THETA', 'C_RHO', 'C_IV', 'C_VOLUME', 'C_LAST', 'C_SIZE', 'C_BID', 'C_ASK', 'STRIKE', 'P_BID', 'P_ASK', 'P_SIZE', 'P_LAST', 'P_DELTA', 'P_GAMMA', 'P_VEGA', 'P_THETA', 'P_RHO', 'P_IV', 'P_VOLUME', 'STRIKE_DISTANCE', 'STRIKE_DISTANCE_PCT']","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:05:57.887035Z","level":"info","event":"Cleaning dataset...","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:05:58.879998Z","level":"info","event":"Removed 63011 dirty rows","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.732884Z","level":"info","event":"Converting timestamp...","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.761487Z","level":"info","event":"Calculating ATM IV...","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.795017Z","level":"info","event":"Calculating Put-Call Ratio...","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.795986Z","level":"info","event":"Put Call Ratio: 1.1912393981104228","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.796845Z","level":"info","event":"Finding most active strikes...","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.806522Z","level":"info","event":"Top 10 Most Active Strikes:","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.814573Z","level":"info","event":"STRIKE","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.817439Z","level":"info","event":"297.0    164362.0","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.818372Z","level":"info","event":"300.0    161205.0","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.819120Z","level":"info","event":"305.0    143117.0","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.820284Z","level":"info","event":"275.0    141508.0","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.821079Z","level":"info","event":"320.0    136612.0","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.821975Z","level":"info","event":"296.0    135442.0","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.822741Z","level":"info","event":"298.0    133900.0","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.823462Z","level":"info","event":"304.0    133427.0","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.824054Z","level":"info","event":"293.0    132289.0","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.825427Z","level":"info","event":"301.0    128274.0","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.826174Z","level":"info","event":"Name: total_volume, dtype: float64","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.833870Z","level":"info","event":"Transformation complete","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.839629Z","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator","filename":"python.py","lineno":230}
+{"timestamp":"2026-03-08T07:06:06.886920Z","level":"info","event":"Task instance in success state","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.887825Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.RUNNING","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:06.888951Z","level":"info","event":"Task operator:<Task(PythonOperator): transform_data>","logger":"task.stdout"}

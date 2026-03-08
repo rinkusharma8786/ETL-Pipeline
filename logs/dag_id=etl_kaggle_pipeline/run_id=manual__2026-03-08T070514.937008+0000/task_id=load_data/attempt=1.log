@@ -1,0 +1,16 @@
+{"timestamp":"2026-03-08T07:06:08.701367Z","level":"info","event":"DAG bundles loaded: dags-folder, example_dags","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":179}
+{"timestamp":"2026-03-08T07:06:08.707300Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/etl_pipeline/dag_etl.py","logger":"airflow.models.dagbag.BundleDagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2026-03-08T07:06:08.943585Z","level":"warning","event":"The `airflow.operators.python.PythonOperator` attribute is deprecated. Please use `'airflow.providers.standard.operators.python.PythonOperator'`.","category":"DeprecatedImportWarning","filename":"/opt/airflow/dags/etl_pipeline/dag_etl.py","lineno":200,"logger":"py.warnings"}
+{"timestamp":"2026-03-08T07:06:08.969833Z","level":"info","event":"Task instance is in running state","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:08.970556Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.QUEUED","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:08.971396Z","level":"info","event":"Current task name:load_data","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:08.972051Z","level":"info","event":"Dag name:etl_kaggle_pipeline","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:08.974154Z","level":"info","event":"Connecting to SQLite database...","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:09.923066Z","level":"info","event":"Loading cleaned data into SQLite...","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:39.852560Z","level":"info","event":"Cleaned data loaded","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:39.857295Z","level":"info","event":"Loading ATM dataset in chunks...","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:40.035755Z","level":"info","event":"ATM data loaded into SQLite successfully","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:40.058973Z","level":"info","event":"Done. Returned value was: None","logger":"airflow.task.operators.airflow.providers.standard.operators.python.PythonOperator","filename":"python.py","lineno":230}
+{"timestamp":"2026-03-08T07:06:40.215255Z","level":"info","event":"Task instance in success state","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:40.216533Z","level":"info","event":" Previous state of the Task instance: TaskInstanceState.RUNNING","logger":"task.stdout"}
+{"timestamp":"2026-03-08T07:06:40.217479Z","level":"info","event":"Task operator:<Task(PythonOperator): load_data>","logger":"task.stdout"}

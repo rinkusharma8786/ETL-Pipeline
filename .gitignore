@@ -1,0 +1,12 @@
+# Python cache
+__pycache__/
+*.pyc
+
+
+# Virtual environment
+airflow-env/
+
+# Environment variables
+
+# Database
+stocks.db
