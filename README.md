@@ -248,20 +248,23 @@ This ensures the pipeline runs in the correct order.
 
 Several validation checks were implemented.
 
-> Dataset Validation
-> Ensures dataset is not empty.
+### Dataset Validation
 
-> Schema Validation
-> Verifies required columns exist.
+Ensures dataset is not empty.
 
-> Cleaning Verification
-> Tracks number of removed rows.
+### Schema Validation
 
-> Error Handling
+Verifies required columns exist.
+
+### Cleaning Verification
+
+Tracks number of removed rows.
+
+### Error Handling
 
 Prevents division errors when calculating Put-Call Ratio.
 
-These checks ensure the pipeline runs reliably.
+> These checks ensure the pipeline runs reliably.
 
 ---
 
@@ -314,4 +317,3 @@ This milestone successfully delivered:
 - Structured database storage
 - Workflow orchestration using Airflow
 
----
