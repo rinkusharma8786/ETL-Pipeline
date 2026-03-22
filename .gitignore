@@ -1,12 +1,13 @@
-# Python cache
+# Environment variables
+.env
+
+# Kaggle API credentials
+.kaggle/
+kaggle.json
+
+# Python
 __pycache__/
 *.pyc
 
-
-# Virtual environment
-airflow-env/
-
-# Environment variables
-
-# Database
-stocks.db
+# Airflow logs 
+logs/

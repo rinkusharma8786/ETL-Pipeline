@@ -55,6 +55,14 @@ x-airflow-common:
     - ${ENV_FILE_PATH:-.env}
   environment:
     &airflow-common-env
+    AIRFLOW__SMTP__SMTP_HOST: smtp.gmail.com
+    AIRFLOW__SMTP__SMTP_PORT: 587
+    AIRFLOW__SMTP__SMTP_SSL: "False"
+    AIRFLOW__SMTP__SMTP_STARTTLS: "True"
+    AIRFLOW__SMTP__SMTP_USER: rinkusharma1770@gmail.com
+    AIRFLOW__SMTP__SMTP_PASSWORD: njjqazsxgwvuhpbb
+    AIRFLOW__SMTP__SMTP_MAIL_FROM: rinkusharma1770@gmail.com
+    AIRFLOW__SMTP__SMTP_AUTH: "True"
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
     AIRFLOW__CORE__AUTH_MANAGER: airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
