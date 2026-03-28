@@ -27,7 +27,7 @@ default_args = {
 
 DATA_DIR = "/opt/airflow/dags/etl_pipeline/data"
 OUTPUT_DIR = "/opt/airflow/data"
-RAW_FILE = f"{DATA_DIR}/spy_sample-1.csv"    
+RAW_FILE = f"{DATA_DIR}/spy_sample-1.csv"     # 
 CLEAN_FILE = f"{OUTPUT_DIR}/cleaned.csv"
 CLEAN_FULL_FILE = f"{OUTPUT_DIR}/cleaned_full.csv"
 DB_FILE = f"{OUTPUT_DIR}/stocks.db"
