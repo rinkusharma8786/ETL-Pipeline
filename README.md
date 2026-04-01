@@ -450,7 +450,7 @@ The following enhancements were added to the pipeline
 | Feature        | Description                      |
 | -------------- | -------------------------------- |
 | Scheduling     | Automatically runs the pipeline at fixed intervals |
-| Logging         | Tracks exwcution details and errors|
+| Logging         | Tracks execution details and errors|
 | Retries        | Re-runs failed tasks automatically           |
 | Alerts   | Send notifications on failure              |
 | Monitoring | Tracks pipeline performance and execution status|
